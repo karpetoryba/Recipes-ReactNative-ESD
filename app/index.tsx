@@ -1,8 +1,13 @@
-import { Button, Text, View, StyleSheet } from "react-native";
+import { Button, Text, View, StyleSheet, Image } from "react-native";
 
 export default function Index() {
   return (
     <View style={styles.container}>
+      <Image
+        source={require("@/assets/images/big.png")}
+        style={styles.logo}
+        resizeMode="contain"
+      />
       <View style={styles.card}>
         <Text style={styles.title}> Recettes</Text>
         <Text style={styles.soustext}>Les meilleurs recettes de Bordeaux:</Text>
@@ -46,6 +51,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF9E5",
     paddingHorizontal: 10,
     paddingTop: 20,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
   },
   card: {
     backgroundColor: "#FAEBD7",
