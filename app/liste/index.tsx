@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
-import { router, useRouter } from "expo-router";
-import React from "react";
+import { router, useRouter, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,90 +13,50 @@ import {
 
 export default function RecipesScreen() {
   const router = useRouter();
-  const meals = [
-    {
-      id: 1,
-      title: "Spaghetti Bolognaise",
-      description: "Des pâtes avec de la sauce tomate et de la viande hachée",
-      image:
-        "https://assets.afcdn.com/recipe/20160419/14652_w1024h1024c1cx2420cy1872.jpg",
-      category: "pasta",
-    },
-    {
-      id: 2,
-      title: "Salade César",
-      description:
-        "Une salade avec de la salade verte, du poulet, des croûtons et de la sauce César",
-      image: "https://images.ricardocuisine.com/services/recipes/8440.jpg",
-      category: "salad",
-    },
-    {
-      id: 3,
-      title: "Tarte aux Pommes",
-      description: "Une tarte sucrée avec des pommes",
-      image:
-        "https://assets.afcdn.com/recipe/20180706/80576_w1024h768c1cx2736cy1824.jpg",
-      category: "dessert",
-    },
-    {
-      id: 4,
-      title: "Risotto aux Champignons",
-      description: "Un risotto crémeux avec des champignons",
-      image:
-        "https://assets.afcdn.com/recipe/20180605/79594_w1024h768c1cx2736cy1824.jpg",
-      category: "pasta",
-    },
-    {
-      id: 5,
-      title: "Salade Niçoise",
-      description:
-        "Une salade avec des tomates, des oeufs, des olives, du thon et des haricots verts",
-      image:
-        "https://assets.afcdn.com/recipe/20180706/80576_w1024h768c1cx2736cy1824.jpg",
-      category: "salad",
-    },
-    {
-      id: 6,
-      title: "Tiramisu",
-      description:
-        "Un dessert italien avec du café, des biscuits et du mascarpone",
-      image:
-        "https://assets.afcdn.com/recipe/20180605/79594_w1024h768c1cx2736cy1824.jpg",
-      category: "dessert",
-    },
-  ];
+  const [meals, setMeals] = useState([]);
+
+  useEffect(() => {
+    // Fonction asynchrone pour récupérer les données du repas par ID
+    (async () => {
+      // Demande de l'API pour obtenir les données par ID
+      const mealsJson = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=`
+      );
+      const meals = await mealsJson.json(); // Conversion de la réponse en JSON
+      setMeals(meals.meals); // on assure de récupérer le premier élément
+    })();
+  }, []);
   // handleNavigateToRecipesDetails - pour accéder à la page de détails de la recette
-  const handleNavigateToRecipesDetails = (recipeId) => {
+  const handleNavigateToRecipesDetails = (recipeId: number) => {
     router.push("liste/" + recipeId);
   };
-
-  const renderRecipe = ({ item }) => (
-    <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.image} />
-      <View style={styles.cardContent}>
-        <Text style={styles.recipeTitle}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        //TouchableOpacity - Lorsque l'on appuie sur le bouton, sa transparence
-        change légèrement, créant l'effet visuel d'une pression.
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleNavigateToRecipesDetails(item.id)}
-        >
-          <Text style={styles.buttonText}>Voir le recette</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Liste des Recettes</Text>
-      //FlatList - on utilise pour afficher de longues listes de données.
-      <FlatList
-        data={meals}
-        renderItem={renderRecipe}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      {meals.length === 0 ? (
+        <Text>Loading...</Text>
+      ) : (
+        <FlatList
+          data={meals}
+          keyExtractor={(item) => item.idMeal}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Image source={{ uri: item.strMealThumb }} style={styles.image} />
+              <View style={styles.cardContent}>
+                <Text style={styles.recipeTitle}>{item.strMeal}</Text>
+                <Text style={styles.description}>{item.strCategory}</Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleNavigateToRecipesDetails(item.idMeal)}
+                >
+                  <Text style={styles.buttonText}>Voir le recette</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 }

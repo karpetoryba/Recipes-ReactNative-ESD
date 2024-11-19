@@ -3,47 +3,41 @@ import { useEffect, useState } from "react";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 
 export default function RecipelDetailsScreen() {
-  //useState avec un tableau vide
-  const [meals, setMeals] = useState([]);
+  // useState pour stocker les données du repas
+  const [meal, setMeal] = useState([]);
+  // récupération de l'ID
+  const { id } = useLocalSearchParams();
 
   useEffect(() => {
-    // appeler la fonction asynchrone
+    // Fonction asynchrone pour récupérer les données du repas par ID
     (async () => {
-      //on demande API pour obtenir data
-      const mealsJson = await fetch(
-        "https://www.themealdb.com/api/json/v1/1/search.php?s="
+      // Demande de l'API pour obtenir les données par ID
+      const mealJson = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
       );
-      //Convertir la réponse au format JSON
-      const meals = await mealsJson.json();
-      console.log(meals);
-
-      setMeals(meals.meals);
+      const meal = await mealJson.json(); // Conversion de la réponse en JSON
+      setMeal(meal.meals[0]); // on assure de récupérer le premier élément
     })();
-    //que une fois
   }, []);
 
   return (
     // ScrollView - si les objets ne tiennent pas sur l'écran, nous utilisons pour le défilement
-    //  nous vérifions s'il existe des données de recette. Si une recette existe, son contenu est affiché ; sinon, un message d'erreur s'affiche.
+    // nous vérifions s'il existe des données de recette. Si une recette existe, son contenu est affiché ; sinon, un message d'erreur s'affiche.
     <ScrollView contentContainerStyle={styles.container}>
-      // S'il y a au moins un élément dans le tableau des repas, nous les
-      affichons sous forme de liste
-      {meals.length > 0 ? (
-        //Parcourir chaque élément du tableau des repas à l'aide de la méthode map
-        meals.map((meal, index) => (
-          <View style={styles.recipeCard}>
-            <Text style={styles.title}>{meal.title}</Text>
-            <Text style={styles.description}>{meal.description}</Text>
-            <Text style={styles.category}>Category: {meal.category}</Text>
-          </View>
-        ))
+      {meal ? (
+        <View style={styles.recipeCard}>
+          <Text style={styles.title}>{meal.strMeal}</Text>
+          <Text style={styles.description}>{meal.strInstructions}</Text>
+          <Text style={styles.category}>Catégorie : {meal.strCategory}</Text>
+          {/* Vous pouvez ajouter d'autres informations comme une image */}
+        </View>
       ) : (
-        // S'il n'y a pas de recettes (le tableau des repas est vide), afficher un message d'erreur.
-        <Text style={styles.errorText}>Recipe not found</Text>
+        <Text style={styles.errorText}>Recette non trouvée</Text>
       )}
     </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     padding: 16,
