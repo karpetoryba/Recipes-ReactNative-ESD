@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-// pour contrôler la navigation entre les différents écrans.
+// pour pouvoir naviger entre les differents ecrans.
 export default function RootLayout() {
   return (
     <Stack>
