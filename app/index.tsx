@@ -12,6 +12,9 @@ export default function Index() {
   //for routing on my page
   const router = useRouter();
 
+  const listRecipes = () => {
+    router.push("liste");
+  };
   return (
     //for scrolling to footer
     <ScrollView style={styles.container}>
@@ -41,6 +44,7 @@ export default function Index() {
             amateur de cuisine ou simple curieux, préparez-vous à un festin qui
             vous transportera au cœur de Bordeaux.
           </Text>
+          <Button title="Voir liste des recettes" onPress={listRecipes} />
           <Text style={styles.maintitle}>Les meilleurs recettes:</Text>
           <Text style={styles.recette}>
             1. Spaghetti bolognaise - Des pâtes avec de la sauce tomate et de la
@@ -82,66 +86,64 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF9E5",
-    paddingHorizontal: 10,
-    paddingTop: 20,
+    padding: 16,
+    backgroundColor: "#f9f9f9",
   },
   logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
+    width: "100%",
+    height: 200,
+    marginBottom: 16,
   },
   card: {
-    backgroundColor: "#FAEBD7",
-    padding: 20,
+    backgroundColor: "#fff",
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#D2B48C",
-    marginBottom: 15,
-    shadowColor: "#8B4513",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
+    marginBottom: 20,
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#8B4513",
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  maintitle: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#8B4513",
+    color: "#333",
     marginBottom: 8,
   },
   soustext: {
     fontSize: 16,
-    fontStyle: "italic",
-    marginBottom: 12,
-    color: "#6B4226",
-    textAlign: "center",
+    color: "#666",
+    marginBottom: 16,
   },
   centretext: {
-    marginBottom: 15,
     fontSize: 14,
-    color: "#4B382A",
     lineHeight: 22,
+    color: "#444",
     textAlign: "justify",
+    marginBottom: 16,
+  },
+  maintitle: {
+    fontSize: 22,
+    fontWeight: "600",
+    color: "#222",
+    marginTop: 24,
+    marginBottom: 12,
   },
   recette: {
     fontSize: 16,
-    color: "#4B382A",
-    marginVertical: 4,
+    color: "#333",
+    marginBottom: 12,
   },
   footer: {
-    backgroundColor: "#8B4513",
+    marginTop: 20,
     padding: 10,
-    alignItems: "center",
+    borderTopWidth: 1,
+    borderTopColor: "#e6e6e6",
   },
   text: {
-    color: "#FFF9E5",
     fontSize: 12,
+    color: "#999",
+    textAlign: "center",
   },
 });
