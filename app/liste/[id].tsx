@@ -59,6 +59,7 @@ export default function RecipelDetailsScreen() {
 
   return (
     // ScrollView - si les objets ne tiennent pas sur l'écran, nous utilisons pour le défilement
+    //  nous vérifions s'il existe des données de recette. Si une recette existe, son contenu est affiché ; sinon, un message d'erreur s'affiche.
     <ScrollView contentContainerStyle={styles.container}>
       {recipe ? (
         <View style={styles.recipeCard}>
