@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import {
   Button,
@@ -6,6 +7,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  TextInput,
 } from "react-native";
 
 export default function Index() {
@@ -15,6 +17,19 @@ export default function Index() {
   const listRecipes = () => {
     router.push("liste");
   };
+
+  const [inputValue, setInputValue] = useState("");
+
+  // Handler for text input change
+  const handleInputChange = (text) => {
+    setInputValue(text);
+  };
+
+  // Handler for button click
+  const handleButtonClick = () => {
+    console.log(`Texte récupéré : ${inputValue}`);
+  };
+
   return (
     //for scrolling to footer
     <ScrollView style={styles.container}>
@@ -24,6 +39,13 @@ export default function Index() {
           style={styles.logo}
           resizeMode="contain"
         />
+        <TextInput
+          style={styles.input}
+          onChangeText={handleInputChange}
+          value={inputValue}
+          placeholder="Enter text here"
+        />
+        <Button title="Récupérer le texte" onPress={handleButtonClick} />
         <View style={styles.card}>
           <Text style={styles.title}> Recettes</Text>
           <Text style={styles.soustext}>
@@ -88,6 +110,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#f9f9f9",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
   logo: {
     width: "100%",
