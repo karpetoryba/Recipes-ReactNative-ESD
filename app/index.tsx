@@ -1,48 +1,63 @@
-import { Button, Text, View, StyleSheet, Image } from "react-native";
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from "react-native";
 
 export default function Index() {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/big.png")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-      <View style={styles.card}>
-        <Text style={styles.title}> Recettes</Text>
-        <Text style={styles.soustext}>Les meilleurs recettes de Bordeaux:</Text>
-        <Text style={styles.centretext}>
-          Les Meilleures Recettes de Bordeaux : Un Voyage Culinaire Authentique
-          Découvrez les trésors culinaires de Bordeaux à travers des recettes
-          authentiques qui capturent l'essence de cette région réputée pour sa
-          gastronomie et ses vins. Ce guide propose une sélection des plats les
-          plus emblématiques de la ville, revisités avec passion et tradition.
-          Laissez-vous séduire par la douceur des cannelés bordelais, plongez
-          dans les saveurs du fameux entrecôte à la bordelaise, et savourez la
-          richesse des spécialités comme les huîtres du Bassin d'Arcachon.
-          Chaque recette est un hommage au patrimoine gastronomique bordelais,
-          offrant un équilibre parfait entre savoir-faire local et ingrédients
-          de qualité. Que vous soyez amateur de cuisine ou simple curieux,
-          préparez-vous à un festin qui vous transportera au cœur de Bordeaux.
-        </Text>
-        <Text style={styles.maintitle}>Les meilleurs recettes:</Text>
-        <Text style={styles.recette}>
-          1. Spaghetti bolognaise - Des pâtes avec de la sauce tomate et de la
-          viande hachée
-        </Text>
-        <Text style={styles.recette}>
-          2. Salade César - Une salade avec de la salade verte, du poulet, des
-          croûtons et de la sauce César
-        </Text>
-        <Text style={styles.recette}>
-          3. Tarte aux pommes - Une tarte sucrée avec des pommes
-        </Text>
-      </View>
+    //for scrolling to footer
+    <ScrollView style={styles.container}>
+      <View style={styles.container}>
+        <Image
+          source={require("@/assets/images/big.png")}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <View style={styles.card}>
+          <Text style={styles.title}> Recettes</Text>
+          <Text style={styles.soustext}>
+            Les meilleurs recettes de Bordeaux:
+          </Text>
+          <Text style={styles.centretext}>
+            Les Meilleures Recettes de Bordeaux : Un Voyage Culinaire
+            Authentique Découvrez les trésors culinaires de Bordeaux à travers
+            des recettes authentiques qui capturent l'essence de cette région
+            réputée pour sa gastronomie et ses vins. Ce guide propose une
+            sélection des plats les plus emblématiques de la ville, revisités
+            avec passion et tradition. Laissez-vous séduire par la douceur des
+            cannelés bordelais, plongez dans les saveurs du fameux entrecôte à
+            la bordelaise, et savourez la richesse des spécialités comme les
+            huîtres du Bassin d'Arcachon. Chaque recette est un hommage au
+            patrimoine gastronomique bordelais, offrant un équilibre parfait
+            entre savoir-faire local et ingrédients de qualité. Que vous soyez
+            amateur de cuisine ou simple curieux, préparez-vous à un festin qui
+            vous transportera au cœur de Bordeaux.
+          </Text>
+          <Text style={styles.maintitle}>Les meilleurs recettes:</Text>
+          <Text style={styles.recette}>
+            1. Spaghetti bolognaise - Des pâtes avec de la sauce tomate et de la
+            viande hachée
+          </Text>
+          <Text style={styles.recette}>
+            2. Salade César - Une salade avec de la salade verte, du poulet, des
+            croûtons et de la sauce César
+          </Text>
+          <Text style={styles.recette}>
+            3. Tarte aux pommes - Une tarte sucrée avec des pommes
+          </Text>
+        </View>
 
-      <View style={styles.footer}>
-        <Text style={styles.text}>© 2024 VotreNom. Tous droits réservés.</Text>
+        <View style={styles.footer}>
+          <Text style={styles.text}>
+            © 2024 VotreNom. Tous droits réservés.
+          </Text>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
