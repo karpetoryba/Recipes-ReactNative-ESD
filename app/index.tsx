@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import {
   Button,
   Text,
@@ -8,6 +9,9 @@ import {
 } from "react-native";
 
 export default function Index() {
+  //for routing on my page
+  const router = useRouter();
+
   return (
     //for scrolling to footer
     <ScrollView style={styles.container}>
@@ -42,13 +46,28 @@ export default function Index() {
             1. Spaghetti bolognaise - Des pâtes avec de la sauce tomate et de la
             viande hachée
           </Text>
+          <Image
+            source={require("@/assets/images/b.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
           <Text style={styles.recette}>
             2. Salade César - Une salade avec de la salade verte, du poulet, des
             croûtons et de la sauce César
           </Text>
+          <Image
+            source={require("@/assets/images/cs.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
           <Text style={styles.recette}>
             3. Tarte aux pommes - Une tarte sucrée avec des pommes
           </Text>
+          <Image
+            source={require("@/assets/images/tarte.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
 
         <View style={styles.footer}>
