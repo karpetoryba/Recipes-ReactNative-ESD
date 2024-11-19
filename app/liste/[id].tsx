@@ -1,73 +1,44 @@
 import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 
 export default function RecipelDetailsScreen() {
-  const { id } = useLocalSearchParams();
-  const meals = [
-    {
-      id: 1,
-      title: "Spaghetti bolognaise",
-      description: "Des pâtes avec de la sauce tomate et de la viande hachée",
-      image:
-        "https://assets.afcdn.com/recipe/20160419/14652_w1024h1024c1cx2420cy1872.jpg",
-      category: "pasta",
-    },
-    {
-      id: 2,
-      title: "Salade César",
-      description:
-        "Une salade avec de la salade verte, du poulet, des croûtons et de la sauce César",
-      image: "https://images.ricardocuisine.com/services/recipes/8440.jpg",
-      category: "salad",
-    },
-    {
-      id: 3,
-      title: "Tarte aux pommes",
-      description: "Une tarte sucrée avec des pommes",
-      image:
-        "https://assets.afcdn.com/recipe/20180706/80576_w1024h768c1cx2736cy1824.jpg",
-      category: "dessert",
-    },
-    {
-      id: 4,
-      title: "Risotto aux champignons",
-      description: "Un risotto crémeux avec des champignons",
-      image:
-        "https://assets.afcdn.com/recipe/20180605/79594_w1024h768c1cx2736cy1824.jpg",
-      category: "pasta",
-    },
-    {
-      id: 5,
-      title: "Salade niçoise",
-      description:
-        "Une salade avec des tomates, des oeufs, des olives, du thon et des haricots verts",
-      image:
-        "https://assets.afcdn.com/recipe/20180706/80576_w1024h768c1cx2736cy1824.jpg",
-      category: "salad",
-    },
-    {
-      id: 6,
-      title: "Tiramisu",
-      description:
-        "Un dessert italien avec du café, des biscuits et du mascarpone",
-      image:
-        "https://assets.afcdn.com/recipe/20180605/79594_w1024h768c1cx2736cy1824.jpg",
-      category: "dessert",
-    },
-  ];
-  const recipe = meals.find((recipe) => recipe.id === parseInt(id));
+  //useState avec un tableau vide
+  const [meals, setMeals] = useState([]);
+
+  useEffect(() => {
+    // appeler la fonction asynchrone
+    (async () => {
+      //on demande API pour obtenir data
+      const mealsJson = await fetch(
+        "https://www.themealdb.com/api/json/v1/1/search.php?s="
+      );
+      //Convertir la réponse au format JSON
+      const meals = await mealsJson.json();
+      console.log(meals);
+
+      setMeals(meals.meals);
+    })();
+    //que une fois
+  }, []);
 
   return (
     // ScrollView - si les objets ne tiennent pas sur l'écran, nous utilisons pour le défilement
     //  nous vérifions s'il existe des données de recette. Si une recette existe, son contenu est affiché ; sinon, un message d'erreur s'affiche.
     <ScrollView contentContainerStyle={styles.container}>
-      {recipe ? (
-        <View style={styles.recipeCard}>
-          <Text style={styles.title}>{recipe.title}</Text>
-          <Text style={styles.description}>{recipe.description}</Text>
-          <Text style={styles.category}>Category: {recipe.category}</Text>
-        </View>
+      // S'il y a au moins un élément dans le tableau des repas, nous les
+      affichons sous forme de liste
+      {meals.length > 0 ? (
+        //Parcourir chaque élément du tableau des repas à l'aide de la méthode map
+        meals.map((meal, index) => (
+          <View style={styles.recipeCard}>
+            <Text style={styles.title}>{meal.title}</Text>
+            <Text style={styles.description}>{meal.description}</Text>
+            <Text style={styles.category}>Category: {meal.category}</Text>
+          </View>
+        ))
       ) : (
+        // S'il n'y a pas de recettes (le tableau des repas est vide), afficher un message d'erreur.
         <Text style={styles.errorText}>Recipe not found</Text>
       )}
     </ScrollView>
