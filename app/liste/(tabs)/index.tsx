@@ -1,19 +1,24 @@
-import { useRoute } from "@react-navigation/native";
-import { router, useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   FlatList,
   StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
 } from "react-native";
 
 export default function RecipesScreen() {
   const router = useRouter();
-  const [meals, setMeals] = useState([]);
+  const [meals, setMeals] = useState<
+    {
+      idMeal: string;
+      strMeal: String;
+      strMealThumb: string;
+      strCategory: string;
+    }[]
+  >([]);
 
   useEffect(() => {
     // Fonction asynchrone pour récupérer les données du repas par ID
@@ -27,8 +32,8 @@ export default function RecipesScreen() {
     })();
   }, []);
   // handleNavigateToRecipesDetails - pour accéder à la page de détails de la recette
-  const handleNavigateToRecipesDetails = (recipeId: number) => {
-    router.push("liste/" + recipeId);
+  const handleNavigateToRecipesDetails = (idMeal: string) => {
+    router.push(`liste/${idMeal}`);
   };
 
   return (

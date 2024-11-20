@@ -1,10 +1,11 @@
-import { Tabs } from "expo-router";
+import { Stack } from "expo-router";
 // pour pouvoir naviger entre les differents ecrans.
 export default function RootLayout() {
   return (
-    <Tabs>
-      <Tabs.Screen name="index" options={{ title: "Accueil" }} />
-      <Tabs.Screen name="liste" options={{ headerShown: false }} />
-    </Tabs>
+    <Stack>
+      <Stack.Screen name="index" options={{ title: "Accueil" }} />
+      <Stack.Screen name="liste" options={{ headerShown: false }} />
+      <Stack.Screen name="user" options={{ headerShown: false }} />
+    </Stack>
   );
 }

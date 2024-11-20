@@ -27,6 +27,13 @@ export default function Index() {
     router.push(`liste/random`);
   };
 
+  const UserItem = () => {
+    router.push(`user/idex`);
+  };
+  const ParametersScreenDrawerItem = () => {
+    router.push(`user/parameters`);
+  };
+
   const [inputValue, setInputValue] = useState("");
 
   // Handler for text input change
@@ -77,6 +84,8 @@ export default function Index() {
             vous transportera au cœur de Bordeaux.
           </Text>
           <Button title="Voir liste des recettes" onPress={listRecipes} />
+          <Button title="Voir user" onPress={UserItem} />
+          <Button title="Voir param" onPress={ParametersScreenDrawerItem} />
           <Text style={styles.maintitle}>Les meilleurs recettes:</Text>
           <Text style={styles.recette}>
             1. Spaghetti bolognaise - Des pâtes avec de la sauce tomate et de la
