@@ -10,6 +10,10 @@ export default function MealsLayout() {
         options={{ title: "Voir le recette" }}
       />
       <Stack.Screen name="random" options={{ title: "Recette random" }} />
+      <Stack.Screen
+        name="tabs"
+        options={{ title: "Tabs", headerShown: false }}
+      />
     </Stack>
   );
 }
