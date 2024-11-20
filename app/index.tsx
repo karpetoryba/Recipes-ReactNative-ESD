@@ -23,6 +23,10 @@ export default function Index() {
     router.push(`liste/search/${search}`);
   };
 
+  const RandomRecipes = () => {
+    router.push(`liste/random`);
+  };
+
   const [inputValue, setInputValue] = useState("");
 
   // Handler for text input change
@@ -50,6 +54,7 @@ export default function Index() {
           onChangeText={setSearch}
           placeholder="Enter text here"
         />
+        <Button title="Aficher le recette alératoire" onPress={RandomRecipes} />
         <Button title="Chercher le recette" onPress={SearchRecipes} />
         <View style={styles.card}>
           <Text style={styles.title}> Recettes</Text>
