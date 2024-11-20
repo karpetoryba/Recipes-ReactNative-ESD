@@ -11,11 +11,16 @@ import {
 } from "react-native";
 
 export default function Index() {
+  const [search, setSearch] = useState("");
   //for routing on my page
   const router = useRouter();
 
   const listRecipes = () => {
     router.push("liste");
+  };
+
+  const SearchRecipes = () => {
+    router.push(`liste/search/${search}`);
   };
 
   const [inputValue, setInputValue] = useState("");
@@ -41,11 +46,11 @@ export default function Index() {
         />
         <TextInput
           style={styles.input}
-          onChangeText={handleInputChange}
-          value={inputValue}
+          value={search}
+          onChangeText={setSearch}
           placeholder="Enter text here"
         />
-        <Button title="Récupérer le texte" onPress={handleButtonClick} />
+        <Button title="Chercher le recette" onPress={SearchRecipes} />
         <View style={styles.card}>
           <Text style={styles.title}> Recettes</Text>
           <Text style={styles.soustext}>
