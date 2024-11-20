@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import {
-  Button,
   Text,
   View,
   StyleSheet,
   Image,
   ScrollView,
   TextInput,
+  Pressable,
 } from "react-native";
 
 export default function Index() {
   const [search, setSearch] = useState("");
-  //for routing on my page
   const router = useRouter();
 
   const listRecipes = () => {
@@ -34,24 +33,11 @@ export default function Index() {
     router.push(`user/parameters`);
   };
 
-  const [inputValue, setInputValue] = useState("");
-
-  // Handler for text input change
-  const handleInputChange = (text) => {
-    setInputValue(text);
-  };
-
-  // Handler for button click
-  const handleButtonClick = () => {
-    console.log(`Texte récupéré : ${inputValue}`);
-  };
-
   return (
-    //for scrolling to footer
     <ScrollView style={styles.container}>
       <View style={styles.container}>
         <Image
-          source={require("@/assets/images/big.png")}
+          source={require("@/assets/images/veg.png")}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -59,61 +45,59 @@ export default function Index() {
           style={styles.input}
           value={search}
           onChangeText={setSearch}
-          placeholder="Enter text here"
+          placeholder="Recherchez une recette"
         />
-        <Button title="Aficher le recette alératoire" onPress={RandomRecipes} />
-        <Button title="Chercher le recette" onPress={SearchRecipes} />
-        <View style={styles.card}>
-          <Text style={styles.title}> Recettes</Text>
-          <Text style={styles.soustext}>
-            Les meilleurs recettes de Bordeaux:
-          </Text>
-          <Text style={styles.centretext}>
-            Les Meilleures Recettes de Bordeaux : Un Voyage Culinaire
-            Authentique Découvrez les trésors culinaires de Bordeaux à travers
-            des recettes authentiques qui capturent l'essence de cette région
-            réputée pour sa gastronomie et ses vins. Ce guide propose une
-            sélection des plats les plus emblématiques de la ville, revisités
-            avec passion et tradition. Laissez-vous séduire par la douceur des
-            cannelés bordelais, plongez dans les saveurs du fameux entrecôte à
-            la bordelaise, et savourez la richesse des spécialités comme les
-            huîtres du Bassin d'Arcachon. Chaque recette est un hommage au
-            patrimoine gastronomique bordelais, offrant un équilibre parfait
-            entre savoir-faire local et ingrédients de qualité. Que vous soyez
-            amateur de cuisine ou simple curieux, préparez-vous à un festin qui
-            vous transportera au cœur de Bordeaux.
-          </Text>
-          <Button title="Voir liste des recettes" onPress={listRecipes} />
-          <Button title="Voir user" onPress={UserItem} />
-          <Button title="Voir param" onPress={ParametersScreenDrawerItem} />
-          <Text style={styles.maintitle}>Les meilleurs recettes:</Text>
-          <Text style={styles.recette}>
-            1. Spaghetti bolognaise - Des pâtes avec de la sauce tomate et de la
+        <Pressable style={styles.button} onPress={RandomRecipes}>
+          <Text style={styles.buttonText}>Recette aléatoire</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={SearchRecipes}>
+          <Text style={styles.buttonText}>Chercher une recette</Text>
+        </Pressable>
+        <View style={styles.cardContainer}>
+          <Pressable style={styles.card} onPress={listRecipes}>
+            <Text style={styles.cardTitle}>Voir la liste des recettes</Text>
+          </Pressable>
+          <Pressable style={styles.card} onPress={UserItem}>
+            <Text style={styles.cardTitle}>Voir profil utilisateur</Text>
+          </Pressable>
+          <Pressable style={styles.card} onPress={ParametersScreenDrawerItem}>
+            <Text style={styles.cardTitle}>Paramètres</Text>
+          </Pressable>
+        </View>
+
+        <Text style={styles.maintitle}>Les meilleurs recettes:</Text>
+        <Pressable style={styles.recipeCard}>
+          <Text style={styles.recipeText}>
+            Spaghetti bolognaise - Des pâtes avec de la sauce tomate et de la
             viande hachée
           </Text>
           <Image
             source={require("@/assets/images/b.png")}
-            style={styles.logo}
+            style={styles.recipeImage}
             resizeMode="contain"
           />
-          <Text style={styles.recette}>
-            2. Salade César - Une salade avec de la salade verte, du poulet, des
+        </Pressable>
+        <Pressable style={styles.recipeCard}>
+          <Text style={styles.recipeText}>
+            Salade César - Une salade avec de la salade verte, du poulet, des
             croûtons et de la sauce César
           </Text>
           <Image
             source={require("@/assets/images/cs.png")}
-            style={styles.logo}
+            style={styles.recipeImage}
             resizeMode="contain"
           />
-          <Text style={styles.recette}>
-            3. Tarte aux pommes - Une tarte sucrée avec des pommes
+        </Pressable>
+        <Pressable style={styles.recipeCard}>
+          <Text style={styles.recipeText}>
+            Tarte aux pommes - Une tarte sucrée avec des pommes
           </Text>
           <Image
             source={require("@/assets/images/tarte.png")}
-            style={styles.logo}
+            style={styles.recipeImage}
             resizeMode="contain"
           />
-        </View>
+        </Pressable>
 
         <View style={styles.footer}>
           <Text style={styles.text}>
@@ -124,73 +108,103 @@ export default function Index() {
     </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#e9f5e9",
   },
   input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
+    borderColor: "#4caf50",
+    borderRadius: 8,
     padding: 10,
+    backgroundColor: "#fff",
   },
   logo: {
     width: "100%",
     height: 200,
     marginBottom: 16,
   },
+  button: {
+    backgroundColor: "#4caf50",
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  cardContainer: {
+    marginVertical: 20,
+  },
   card: {
     backgroundColor: "#fff",
-    borderRadius: 8,
+    borderRadius: 10,
     padding: 20,
+    marginBottom: 16,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
-    marginBottom: 20,
+    borderColor: "#4caf50",
+    borderWidth: 1,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 8,
-  },
-  soustext: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 16,
-  },
-  centretext: {
-    fontSize: 14,
-    lineHeight: 22,
-    color: "#444",
-    textAlign: "justify",
-    marginBottom: 16,
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#4caf50",
+    textAlign: "center",
   },
   maintitle: {
     fontSize: 22,
     fontWeight: "600",
-    color: "#222",
+    color: "#388e3c",
     marginTop: 24,
     marginBottom: 12,
   },
-  recette: {
+  recipeCard: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 16,
+    marginBottom: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#4caf50",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  recipeText: {
     fontSize: 16,
     color: "#333",
-    marginBottom: 12,
+    flex: 1,
+  },
+  recipeImage: {
+    width: 80,
+    height: 80,
+    marginLeft: 10,
+    borderRadius: 10,
   },
   footer: {
     marginTop: 20,
     padding: 10,
     borderTopWidth: 1,
-    borderTopColor: "#e6e6e6",
+    borderTopColor: "#c8e6c9",
   },
   text: {
     fontSize: 12,
-    color: "#999",
+    color: "#666",
     textAlign: "center",
   },
 });

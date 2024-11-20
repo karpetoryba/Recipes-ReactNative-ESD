@@ -14,24 +14,23 @@ export default function RecipesScreen() {
   const [meals, setMeals] = useState<
     {
       idMeal: string;
-      strMeal: String;
+      strMeal: string;
       strMealThumb: string;
       strCategory: string;
     }[]
   >([]);
 
   useEffect(() => {
-    // Fonction asynchrone pour récupérer les données du repas par ID
+    // Fonction asynchrone pour récupérer les données du repas
     (async () => {
-      // Demande de l'API pour obtenir les données par ID
       const mealsJson = await fetch(
         `https://www.themealdb.com/api/json/v1/1/search.php?s=`
       );
-      const meals = await mealsJson.json(); // Conversion de la réponse en JSON
-      setMeals(meals.meals); // on assure de récupérer le premier élément
+      const meals = await mealsJson.json();
+      setMeals(meals.meals);
     })();
   }, []);
-  // handleNavigateToRecipesDetails - pour accéder à la page de détails de la recette
+
   const handleNavigateToRecipesDetails = (idMeal: string) => {
     router.push(`liste/${idMeal}`);
   };
@@ -40,25 +39,23 @@ export default function RecipesScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Liste des Recettes</Text>
       {meals.length === 0 ? (
-        <Text>Loading...</Text>
+        <Text style={styles.loadingText}>Chargement...</Text>
       ) : (
         <FlatList
           data={meals}
           keyExtractor={(item) => item.idMeal}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => handleNavigateToRecipesDetails(item.idMeal)}
+            >
               <Image source={{ uri: item.strMealThumb }} style={styles.image} />
               <View style={styles.cardContent}>
                 <Text style={styles.recipeTitle}>{item.strMeal}</Text>
                 <Text style={styles.description}>{item.strCategory}</Text>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => handleNavigateToRecipesDetails(item.idMeal)}
-                >
-                  <Text style={styles.buttonText}>Voir le recette</Text>
-                </TouchableOpacity>
+                <Text style={styles.linkText}>Voir le recette →</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         />
       )}
@@ -70,25 +67,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#e9f5e9",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
     textAlign: "center",
-    color: "#333",
+    color: "#388e3c",
+  },
+  loadingText: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+    marginTop: 20,
   },
   card: {
     backgroundColor: "#fff",
-    borderRadius: 8,
+    borderRadius: 10,
     overflow: "hidden",
     marginBottom: 16,
     elevation: 3,
     shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
+    borderWidth: 1,
+    borderColor: "#4caf50",
   },
   image: {
     width: "100%",
@@ -98,25 +103,19 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   recipeTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#444",
+    color: "#2e7d32",
   },
   description: {
     fontSize: 14,
     color: "#666",
     marginBottom: 8,
   },
-  button: {
-    backgroundColor: "#007bff",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
+  linkText: {
+    fontSize: 14,
+    color: "#1b5e20",
     fontWeight: "bold",
   },
 });
