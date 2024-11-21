@@ -158,9 +158,10 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   logo: {
-    width: "100%",
-    height: 200,
-    marginBottom: 16,
+    width: 50,
+    height: 50,
+    resizeMode: "contain",
+    margin: 20,
   },
   button: {
     backgroundColor: "#4caf50",
