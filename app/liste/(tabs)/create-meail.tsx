@@ -11,8 +11,21 @@ const CreateMealScreen = () => {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState("");
 
+  const handleCreate = async () => {
+    await fetch("https://www.themealdb.com/api/json/v1/1/create.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        ingredients,
+      }),
+    });
+  };
+
   const handleSubmit = () => {
-    console.log("Recette créée:", { name, ingredients });
+    handleCreate();
   };
 
   return (

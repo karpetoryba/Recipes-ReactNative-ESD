@@ -1,67 +1,48 @@
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import useSearchMeals from "@/hook/useSearchMeals";
 import {
-  View,
   Text,
+  View,
   FlatList,
-  StyleSheet,
   Image,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 
-export default function RecipesScreen() {
+const RecipesScreen = () => {
   const router = useRouter();
-  const [meals, setMeals] = useState<
-    {
-      idMeal: string;
-      strMeal: string;
-      strMealThumb: string;
-      strCategory: string;
-    }[]
-  >([]);
 
-  useEffect(() => {
-    // Fonction asynchrone pour récupérer les données du repas
-    (async () => {
-      const mealsJson = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=`
-      );
-      const meals = await mealsJson.json();
-      setMeals(meals.meals);
-    })();
-  }, []);
+  const meals = useSearchMeals();
 
-  const handleNavigateToRecipesDetails = (idMeal: string) => {
-    router.push(`liste/${idMeal}`);
-  };
+  if (!meals.length) {
+    return <Text style={styles.loadingText}>Chargement...</Text>;
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Liste des Recettes</Text>
-      {meals.length === 0 ? (
-        <Text style={styles.loadingText}>Chargement...</Text>
-      ) : (
-        <FlatList
-          data={meals}
-          keyExtractor={(item) => item.idMeal}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => handleNavigateToRecipesDetails(item.idMeal)}
-            >
-              <Image source={{ uri: item.strMealThumb }} style={styles.image} />
-              <View style={styles.cardContent}>
-                <Text style={styles.recipeTitle}>{item.strMeal}</Text>
-                <Text style={styles.description}>{item.strCategory}</Text>
-                <Text style={styles.linkText}>Voir le recette →</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      )}
+      <FlatList
+        data={meals}
+        keyExtractor={(item) => item.idMeal}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => router.push(`/liste/${item.idMeal}`)}
+          >
+            <Image source={{ uri: item.strMealThumb }} style={styles.image} />
+            <View style={styles.cardContent}>
+              <Text style={styles.recipeTitle}>{item.strMeal}</Text>
+              <Text style={styles.description}>{item.strCategory}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
-}
+};
+
+export default RecipesScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -112,10 +93,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
     marginBottom: 8,
-  },
-  linkText: {
-    fontSize: 14,
-    color: "#1b5e20",
-    fontWeight: "bold",
   },
 });

@@ -1,22 +1,8 @@
-import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useGetMeals } from "@/hook/useGetMeals";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 
 export default function RecipelDetailsScreen() {
-  // useState pour stocker les données du repas
-  const [meal, setMeal] = useState([]);
-
-  useEffect(() => {
-    // Fonction asynchrone pour récupérer les données du repas par ID
-    (async () => {
-      // Demande de l'API pour obtenir les données par ID
-      const mealJson = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/random.php`
-      );
-      const meal = await mealJson.json(); // Conversion de la réponse en JSON
-      setMeal(meal.meals[0]); // on assure de récupérer le premier élément
-    })();
-  }, []);
+  const meal = useGetMeals();
 
   return (
     // ScrollView - si les objets ne tiennent pas sur l'écran, nous utilisons pour le défilement
