@@ -1,7 +1,14 @@
+import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 
-export default function useGetMealById(id) {
-  const [meal, setMeal] = useState([]);
+export default function useGetMealById() {
+  const [meal, setMeal] = useState<{
+    idMeal: String;
+    strMeal: String;
+    strInstructions: String;
+    strCategory: string;
+  } | null>(null);
+  const { id } = useLocalSearchParams();
 
   useEffect(() => {
     (async () => {

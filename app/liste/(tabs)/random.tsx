@@ -1,4 +1,4 @@
-import { useGetMeals } from "@/hook/useGetMeals";
+import useGetMeals from "@/hook/useGetMeals";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 
 export default function RecipelDetailsScreen() {

@@ -1,6 +1,4 @@
-import { useGetMealById } from "@/hook/useGetMealById";
-import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import useGetMealById from "@/hook/useGetMealById";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 
 export default function RecipelDetailsScreen() {

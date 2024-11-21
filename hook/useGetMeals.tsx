@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 
 export default function useGetMeals() {
-  const [meal, setMeal] = useState([]);
+  const [meal, setMeal] = useState<{
+    idMeal: String;
+    strMeal: String;
+    strInstructions: String;
+    strCategory: string;
+  } | null>(null);
 
   useEffect(() => {
     // Fonction asynchrone pour récupérer les données du repas par ID
