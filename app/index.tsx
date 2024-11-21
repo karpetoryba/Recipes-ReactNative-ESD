@@ -9,6 +9,8 @@ import {
   TextInput,
   Pressable,
   Animated,
+  Button,
+  Alert,
 } from "react-native";
 
 export default function Index() {
@@ -21,6 +23,10 @@ export default function Index() {
       toValue: 0.95,
       useNativeDriver: true,
     }).start();
+  };
+
+  const handleDisplayMessage = () => {
+    Alert.alert("Vous avez un nouveau message", "T ou ????");
   };
 
   const handlePressOut = () => {
@@ -89,6 +95,12 @@ export default function Index() {
           <Pressable style={styles.card} onPress={listRecipes}>
             <Text style={styles.cardTitle}>Voir la liste des recettes</Text>
           </Pressable>
+          <Button
+            onPress={handleDisplayMessage}
+            title="Learn More"
+            color="#008000"
+            accessibilityLabel="Learn more about this purple button"
+          />
           <Pressable style={styles.card} onPress={UserItem}>
             <Text style={styles.cardTitle}>Voir profil utilisateur</Text>
           </Pressable>
