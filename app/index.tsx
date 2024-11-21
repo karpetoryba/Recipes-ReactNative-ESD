@@ -10,7 +10,7 @@ import {
   Pressable,
   Animated,
   Button,
-  Alert,
+  Vibration,
 } from "react-native";
 
 export default function Index() {
@@ -26,7 +26,7 @@ export default function Index() {
   };
 
   const handleDisplayMessage = () => {
-    Alert.alert("Vous avez un nouveau message", "T ou ????");
+    Vibration.vibrate(500);
   };
 
   const handlePressOut = () => {
